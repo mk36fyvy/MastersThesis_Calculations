@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<simulationParameters>
+  <cyclicChromosomes value="0" />
+  <showEmptySites value="1" />
+  <colorTheme value="Theme 1" />
+  <propMatrices value="0" />
+  <simulationTime type="t" value="10" />
+</simulationParameters>

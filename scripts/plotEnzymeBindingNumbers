@@ -1,0 +1,3 @@
+getEnzymeBindingNumbers
+python3 /mnt/e/Users/mikre/Dropbox/MasterThesis/scripts/plotEnzymeBindingNumbers.py
+python3 /mnt/e/Users/mikre/Dropbox/MasterThesis/scripts/plotEnzymeBindingNumbers_numberAnnot.py

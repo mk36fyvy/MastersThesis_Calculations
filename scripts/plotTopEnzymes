@@ -1,0 +1,14 @@
+# Where: Call this in 0/ etc.
+# What: Plots the most associated enzymes in a histogram.
+# Usage: plotTopEnzymes [logScale? -> "log"]
+
+plotLog=$1
+
+if [ "$plotLog" == "log" ]; then
+    doLog=true
+else
+    doLog=false
+fi
+
+getTopEnzymes
+python3 ~/Dropbox/MasterThesis/scripts/plotTopEnzymes.py ./topEnzymes.txt $doLog

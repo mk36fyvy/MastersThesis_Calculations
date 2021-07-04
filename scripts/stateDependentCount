@@ -1,0 +1,11 @@
+EDOutfile=$1
+
+# Stripping headers from 'big' EpiDynaST outfile
+grep -v '>' $EDOutfile | sed -e s/{}/0/g -e s/{H3'\['K27'\.'ac'\]'}/1/g -e s/{H3'\['K27'\.'me'\]'}/2/g | tail -n +2> stateCounts.temp
+
+
+
+# Count coop and ranom adder depending on the macrostate (ac, me,
+# unmodified) and count the step number of those states, too
+stateDependentCounter.rs stateCounts.temp
+rm stateCounts.temp

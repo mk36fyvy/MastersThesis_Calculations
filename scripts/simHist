@@ -1,0 +1,1 @@
+HistSim -r 2 --pf ./theParamfile --sf ./theStatefile --rf ./theRulefile -d ./results/

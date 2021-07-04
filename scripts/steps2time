@@ -1,0 +1,7 @@
+lineNumber=1
+while read -r line
+do
+    time=$(fgrep -v '{' outfile.txt | cut -f 2 -d " " | head -n $lineNumber | tail -n 1)
+    sed -n $lineNumber | sed -i s/^"$lineNumber"/$time/g
+    ((lineNumber++))
+done < state_counts.csv

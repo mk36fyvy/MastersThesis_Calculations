@@ -1,0 +1,4 @@
+python3 /mnt/e/Users/mikre/Dropbox/MasterThesis/scripts/plotTables_longRun_noBivalent.py $1 # $2 # $1:run_number $2:noise_factor
+# python3 ~/Dropbox/MasterThesis/scripts/plotHistograms_longRun_noBivalent.py $1 # $2 # $1:run_number $2:noise_factor
+
+# python3 ~/Dropbox/MasterThesis/scripts/plotTables_longRun_withBivalent.py $1 # $2 # $1:run_number $2:noise_factor

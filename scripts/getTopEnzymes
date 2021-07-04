@@ -1,0 +1,9 @@
+# Call this in 0/ etc.
+
+cat ../channels.txt | sed s/': '/' '/g | sort -nr > ./channels.txt
+countMODSorENZYMES E | awk 'FNR%2 == 1' >temp.topenzymes # count the enzyme modification events and only keep the associations, then uniq sort them
+# sed -ie n\;d temp.topenzymes # doing the same thing as ^
+
+awk -f /mnt/e/Users/mikre/Dropbox/MasterThesis/scripts/dictionaryLookup.awk channels.txt temp.topenzymes | sort -nr > topEnzymes.txt
+# awk -f /mnt/e/Users/mikre/Dropbox/MasterThesis/scripts/dictionaryLookup.awk channels.txt temp.topenzymes | sort -nr > topEnzymes.txt
+rm temp.topenzymes

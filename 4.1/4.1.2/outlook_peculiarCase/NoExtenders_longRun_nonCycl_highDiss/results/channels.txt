@@ -1,0 +1,8 @@
+0: H3K27_ac_randomAdder
+1: H3K27_ac_randomAdder
+2: H3K27_me_randomAdder
+3: H3K27_me_randomAdder
+4: randomRemover_me
+5: randomRemover_me
+6: randomRemover_ac
+7: randomRemover_ac

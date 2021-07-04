@@ -1,0 +1,3 @@
+getEnzymeBindingDurations
+python3 /mnt/e/Users/mikre/Dropbox/MasterThesis/scripts/plotEnzymeBindingDurations.py
+python3 /mnt/e/Users/mikre/Dropbox/MasterThesis/scripts/plotEnzymeBindingDurations_numberAnnot.py

@@ -1,0 +1,2 @@
+# HistSim -r 10 --pf $1 --sf $2 --rf $3 -d ./results/ -o 0 --steps 1  # output only every nth step
+HistSim --cyc -r 5 --pf $1 --sf $2 --rf $3 -d ./results/ -o 1

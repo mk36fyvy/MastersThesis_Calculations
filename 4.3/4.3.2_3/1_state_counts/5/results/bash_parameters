@@ -1,0 +1,8 @@
+seed=2086721603
+rf=rulefile
+sf=statefile
+pf=paramfile
+cyc=1
+nondyn=0
+runs=5
+tdr=0.300000

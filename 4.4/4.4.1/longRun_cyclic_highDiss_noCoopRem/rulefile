@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- COMMENT:  -->
+
+<!-- cooperative enzymes with unmodified {} spacers -->
+<!-- cooperative K27ac adder space=0 rate=20000
+                                 space=1 rate=20000
+                                 space=2 rate=20000
+                                 space=3 rate=20000
+                                 space=4 rate=20000
+                                 space=5 rate=20000
+                                 space=6 rate=20000 -->
+
+<!-- cooperative K27me adder  space=0 rate=20000
+                                  space=1 rate=20000
+                                  space=2 rate=20000
+                                  space=3 rate=20000
+                                  space=4 rate=20000
+                                  space=5 rate=20000
+                                  space=6 rate=20000 -->
+
+<!-- 'noise' enzymes aka random adders and removers -->
+<!-- random contextless K27ac adder rate=10000 -->
+<!-- random contextless K27me adder rate=10000 -->
+<!-- random contextless K27me remover rate=2 -->
+<!-- random contextless K27ac remover rate=2 -->
+
+
+<enzymeSet>
+  <!-- cooperative adders -->
+  <enzymeDef>
+    <!-- cooperative K27ac adder rate=20000 -->
+    <name enabled="1" value="coopAdder_ac" />
+    <size type="symmetric" value="1" />
+    <concentration type="absolute" value="100" />
+    <bindingRatesRuleSet>
+      <name value="coopAdder_ac_space0" /> <!-- space=0 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.ac]}({H3[K27.un]}){H3[K27.ac]}" />
+      <rule value="{H3[K27.ac]}({H3[K27.ac]}){H3[K27.ac]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_ac_space1" /> <!-- space=1 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.ac]}{}({H3[K27.un]}){}{H3[K27.ac]}" />
+      <rule value="{H3[K27.ac]}{}({H3[K27.ac]}){}{H3[K27.ac]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_ac_space2" /> <!-- space=2 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.ac]}{}{}({H3[K27.un]}){}{}{H3[K27.ac]}" />
+      <rule value="{H3[K27.ac]}{}{}({H3[K27.ac]}){}{}{H3[K27.ac]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_ac_space3" /> <!-- space=3 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.ac]}{}{}{}({H3[K27.un]}){}{}{}{H3[K27.ac]}" />
+      <rule value="{H3[K27.ac]}{}{}{}({H3[K27.ac]}){}{}{}{H3[K27.ac]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_ac_space4" /> <!-- space=4 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.ac]}{}{}{}{}({H3[K27.un]}){}{}{}{}{H3[K27.ac]}" />
+      <rule value="{H3[K27.ac]}{}{}{}{}({H3[K27.ac]}){}{}{}{}{H3[K27.ac]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_ac_space5" /> <!-- space=5 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.ac]}{}{}{}{}{}({H3[K27.un]}){}{}{}{}{}{H3[K27.ac]}" />
+      <rule value="{H3[K27.ac]}{}{}{}{}{}({H3[K27.ac]}){}{}{}{}{}{H3[K27.ac]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_ac_space6" /> <!-- space=6 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.ac]}{}{}{}{}{}{}({H3[K27.un]}){}{}{}{}{}{}{H3[K27.ac]}" />
+      <rule value="{H3[K27.ac]}{}{}{}{}{}{}({H3[K27.ac]}){}{}{}{}{}{}{H3[K27.ac]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+  </enzymeDef>
+
+  <enzymeDef>
+    <!-- cooperative K27me adder rate=20000 -->
+    <name enabled="1" value="coopAdder_me" />
+    <size type="symmetric" value="1" />
+    <concentration type="absolute" value="100" />
+    <bindingRatesRuleSet>
+      <name value="coopAdder_me_space0" /> <!-- space=0 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.me]}({H3[K27.un]}){H3[K27.me]}" />
+      <rule value="{H3[K27.me]}({H3[K27.me]}){H3[K27.me]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_me_space1" /> <!-- space=1 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.me]}{}({H3[K27.un]}){}{H3[K27.me]}" />
+      <rule value="{H3[K27.me]}{}({H3[K27.me]}){}{H3[K27.me]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_me_space2" /> <!-- space=2 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.me]}{}{}({H3[K27.un]}){}{}{H3[K27.me]}" />
+      <rule value="{H3[K27.me]}{}{}({H3[K27.me]}){}{}{H3[K27.me]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_me_space3" /> <!-- space=3 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.me]}{}{}{}({H3[K27.un]}){}{}{}{H3[K27.me]}" />
+      <rule value="{H3[K27.me]}{}{}{}({H3[K27.me]}){}{}{}{H3[K27.me]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_me_space4" /> <!-- space=4 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.me]}{}{}{}{}({H3[K27.un]}){}{}{}{}{H3[K27.me]}" />
+      <rule value="{H3[K27.me]}{}{}{}{}({H3[K27.me]}){}{}{}{}{H3[K27.me]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_me_space5" /> <!-- space=5 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.me]}{}{}{}{}{}({H3[K27.un]}){}{}{}{}{}{H3[K27.me]}" />
+      <rule value="{H3[K27.me]}{}{}{}{}{}({H3[K27.me]}){}{}{}{}{}{H3[K27.me]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+    <bindingRatesRuleSet>
+      <name value="coopAdder_me_space6" /> <!-- space=6 rate=20000 -->
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="{H3[K27.me]}{}{}{}{}{}{}({H3[K27.un]}){}{}{}{}{}{}{H3[K27.me]}" />
+      <rule value="{H3[K27.me]}{}{}{}{}{}{}({H3[K27.me]}){}{}{}{}{}{}{H3[K27.me]}" />
+      <rate value="20000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+  </enzymeDef>
+
+  <!-- Noise aka random adders and removers -->
+  <enzymeDef>
+    <!-- random contextless K27ac adder rate=1 -->
+    <name enabled="1" value="randomAdder_ac" />
+    <size type="symmetric" value="1" />
+    <concentration type="absolute" value="100" />
+    <bindingRatesRuleSet>
+      <name value="randomAdder_ac" />
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="({H3[K27.un]})" />
+      <rule value="({H3[K27.ac]})" />
+      <rate value="10000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+  </enzymeDef>
+  <enzymeDef>
+    <!-- random contextless K27me adder rate=1 -->
+    <name enabled="1" value="randomAdder_me" />
+    <size type="symmetric" value="1" />
+    <concentration type="absolute" value="100" />
+    <bindingRatesRuleSet>
+      <name value="randomAdder_me" />
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="({H3[K27.un]})" />
+      <rule value="({H3[K27.me]})" />
+      <rate value="10000" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+  </enzymeDef>
+  <enzymeDef>
+    <!-- random contextless K27me remover rate=2 -->
+    <name enabled="1" value="randomRemover_me" />
+    <size type="symmetric" value="1" />
+    <concentration type="absolute" value="100" />
+    <bindingRatesRuleSet>
+      <name value="randomRemover_me" />
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="({H3[K27.me]})" />
+      <rule value="({H3[K27.un]})" />
+      <rate value="2" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+  </enzymeDef>
+  <enzymeDef>
+    <!-- random contextless K27ac remover rate=2 -->
+    <name enabled="1" value="randomRemover_ac" />
+    <size type="symmetric" value="1" />
+    <concentration type="absolute" value="100" />
+    <bindingRatesRuleSet>
+      <name value="randomRemover_ac" />
+      <type value="explicitRate" />
+      <enabled value="1" />
+      <target value="({H3[K27.ac]})" />
+      <rule value="({H3[K27.un]})" />
+      <rate value="2" />
+      <dissociationRate type="absolute" value="100000" />
+    </bindingRatesRuleSet>
+  </enzymeDef>
+</enzymeSet>

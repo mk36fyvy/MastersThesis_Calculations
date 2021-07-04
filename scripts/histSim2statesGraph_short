@@ -1,0 +1,34 @@
+
+
+cd results && mkdir -p "../analysis"
+echo "All analysis files and plots can be found in 'analysis/' next to your 'results/' directory"
+
+for d in */; do
+    cd $d
+    echo "Processing dir $(basename $d)"
+    mkdir -p "../../analysis/$(basename $d)"
+
+    # Getting a ranking histogram of the top enzymes measured by total number of association per run ("true" makes it scaled logarithmically on y)
+    getTopEnzymes
+    cp "topEnzymes.txt" "../../analysis/$(basename $d)/topEnzymes.txt"
+    python3 ~/Dropbox/MasterThesis/scripts/plotTopEnzymes.py ./topEnzymes.txt false $(basename $d)
+    python3 ~/Dropbox/MasterThesis/scripts/plotTopEnzymes.py ./topEnzymes.txt true  $(basename $d)
+
+    # tableStates $(basename $d) $noise_factor # I: outfile.txt from EpiDynaST; O: Tabled occurences of nucl states (active, silent, bivalent)
+    # plotTables $(basename $d) $noise_factor # I: table from tableStates; O: Plots with 1. state occurence during simulation 2. stacked bar plot of all the states per Gillespie step
+    # tableStates_all27 $(basename $d)  # I: outfile.txt from EpiDynaST; O: Tabled occurences of nucl states (active, silent, bivalent)
+
+    # Choose script depending on modifications that occur in the system
+        # histSim2csvCounts_K27_K4 $(basename $d) # Occurring modifications: K27.ac, K4.me
+        histSim2csvCounts_K27only $(basename $d)       # Occurring modifications: K27.ac, K27.me
+        # histSim2csvCounts_Ky_Kx $(basename $d) # Occuring modifications: Ky.me, Ky.ac, Kx.me, Kx.ac (also on same nuc)
+
+        # argument basename etc. might not be needed anymore
+
+    plotTables_short $(basename $d)  # I: table from tableStates; O: Plots with 1. state occurence during simulation 2. stacked bar plot of all the states per Gillespie step
+    cd ..
+done
+
+cd ..
+plotEnzymeBindingNumbers
+plotEnzymeBindingDurations

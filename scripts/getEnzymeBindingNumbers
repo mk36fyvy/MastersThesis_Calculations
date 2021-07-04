@@ -1,0 +1,28 @@
+# CALL THIS SCRIPT IN THE SAME DIR WHERE EPIDYNAST IS CALLED AND 'results/' is present
+
+# Counts the enzymes' binding durations throughout the simulation for every nucleosome position
+
+
+cd results && mkdir -p "../analysis"
+
+for d in */; do
+    cd $d
+
+    mkdir -p "../../analysis/$(basename $d)/bindingNumbers"
+
+    echo "Processing dir $(basename $d)"
+    nucleosomeCount=$(head -n 3 outfile.txt | tail -n 1 | grep -o ";" | wc -l)
+    count=$(printf -v int '%d\n' $nucleosomeCount)
+
+    progress=0
+
+    printf '%s \r' "Progression: $((100*0/$nucleosomeCount))%"
+    for ((i=1; i<=$nucleosomeCount; i++)); do
+        getEnzymeBindingNumbersOn $i > "../../analysis/$(basename $d)/bindingNumbers/bindingNumbersOn$i.txt"
+
+        printf '%s \r' "Progression: $((100*$i/$nucleosomeCount))%"
+    done
+    echo "Done.                            "
+    cd ..
+done
+cd ..

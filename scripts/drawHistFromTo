@@ -1,0 +1,112 @@
+#Display a nucleosome string as coloured squares. One nucleosome is depicted as 3 connected squares as [H3K27][H3K4/36][H2A].
+#A green modification is considered as activating transcription, a red one is considered as repressing a gene, ehereas blank
+#represents the unmodified state
+#
+#Only draw nucleosome strings FROM line1 TO line2 (line1, line2 included, line1==line2 allowed)
+#
+#Supported modifications are:
+# 			sub1="H3[K27.me]"
+#			sub2="H3[K27.ac]"
+#			sub3="H3[K4.me]"
+#			sub4="H2[A.ub]"
+
+outfile="output.svg"
+from=$1
+to=$2
+
+
+fgrep '{' outfile.txt | sed -n "${from},${to}p" > temp
+
+echo '<?xml version="1.0" standalone="no"?>'>$outfile
+echo '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">'>>$outfile
+echo '<svg width="WIDTHpx" height="HEIGHTpx" version="1.1" xmlns="http://www.w3.org/2000/svg" viewport-fill="black">'>>$outfile
+echo >>$outfile
+#line below is the white background
+echo '<rect x="0" y="0" width="WIDTHpx" height="HEIGHTpx" style="fill: white;"/>'>>$outfile
+#line below is the header/legend
+echo '<rect x="10" y="7" width="50" height="35" style="fill: rgb(255,255,255); stroke-width: 1px; stroke: black;"/>
+<rect x="60" y="7" width="58" height="35" style="fill: rgb(255,255,255); stroke-width: 1px; stroke: black;"/>
+<rect x="118" y="7" width="42" height="35" style="fill: rgb(255,255,255); stroke-width: 1px; stroke: black;"/>
+<text x="16" y="20">H3K27</text>
+<text x="65" y="20">H3K4/36</text>
+<text x="127" y="20">H2A</text>
+<text x="15" y="35" style="fill: red">me</text>
+<text x="40" y="35" style="fill: green">ac</text>
+<text x="78" y="35" style="fill: green">me</text>
+<text x="130" y="35" style="fill: red">ub</text>'>>$outfile #header with legendecho >>$outfile
+echo >>$outfile
+
+y=35 #height of the upper left corner of the first boxes -20
+i=$from
+xMax=0
+yMax=0
+
+while read -r line; do
+	array=$(echo $line | tr ';' '\n' | grep -oE {.*})
+
+
+
+	x1=-9
+	y=$(($y+20))
+
+	echo '<text x="5" y="'"$(($y+20))"'" style="font-size: 10px; color: black;" fill="black" dy="-10">'"$i"'</text>'>>$outfile
+
+	for element in $array; do
+
+		x1=$(($x1+40))
+		x2=$(($x1+10))
+		x3=$(($x1+20))
+
+		if [[ $element == "{}" ]]; then
+			echo '<rect x="'"$x1"'" y="'"$y"'" width="10" height="10" style="fill: rgb(255,255,255); stroke-width: 1px; stroke: black;"/>'>>$outfile
+			echo '<rect x="'"$x2"'" y="'"$y"'" width="10" height="10" style="fill: rgb(255,255,255); stroke-width: 1px; stroke: black;"/>'>>$outfile
+			echo '<rect x="'"$x3"'" y="'"$y"'" width="10" height="10" style="fill: rgb(255,255,255); stroke-width: 1px; stroke: black;"/>'>>$outfile
+		else
+
+			# sub1="H3[K27.me]"
+			# sub2="H3[K27.ac]"
+			# sub3="H3[K4.me]"
+			# sub4="H2[A.ub]"
+
+			sub1="H3[Ky.me]"
+			sub2="H3[Ky.ac]"
+			sub3="H3[Kx.me]"
+			sub4="H3[Kx.ac]"
+
+			if [[ $element == *"$sub1"* ]]; then
+				echo '<rect x="'"$x1"'" y="'"$y"'" width="10" height="10" style="fill: rgb(255,0,0); stroke-width: 1px; stroke: black;"/>'>>$outfile
+			elif [[ $element == *"$sub2"* ]]; then
+				echo '<rect x="'"$x1"'" y="'"$y"'" width="10" height="10" style="fill: rgb(0,255,0); stroke-width: 1px; stroke: black;"/>'>>$outfile
+			else #H3[K27.un]
+				echo '<rect x="'"$x1"'" y="'"$y"'" width="10" height="10" style="fill: rgb(255,255,255); stroke-width: 1px; stroke: black;"/>'>>$outfile
+			fi
+
+			if [[ $element == *"$sub3"* ]]; then
+				echo '<rect x="'"$x2"'" y="'"$y"'" width="10" height="10" style="fill: rgb(0,255,0); stroke-width: 1px; stroke: black;"/>'>>$outfile
+			else #H3[K4.un]
+				echo '<rect x="'"$x2"'" y="'"$y"'" width="10" height="10" style="fill: rgb(255,255,255); stroke-width: 1px; stroke: black;"/>'>>$outfile
+			fi
+
+			if [[ $element == *"$sub4"* ]]; then
+				echo '<rect x="'"$x3"'" y="'"$y"'" width="10" height="10" style="fill: rgb(255,0,0); stroke-width: 1px; stroke: black;"/>'>>$outfile
+			else #H2[A.un]
+				echo '<rect x="'"$x3"'" y="'"$y"'" width="10" height="10" style="fill: rgb(255,255,255); stroke-width: 1px; stroke: black;"/>'>>$outfile
+			fi
+		fi
+
+		xMax=$(($x3+20))
+
+	done
+
+	i=$(($i+1))
+	yMax=$(($y+20))
+
+done < temp
+echo '</svg>'>>$outfile
+
+frameSize='<rect x="'"0"'" y="'"0"'" width="'"$xMax"'" height="'"$yMax"'" style="'"fill: white;"'"/>'
+
+sed -i -e 's/WIDTH/'$xMax'/g' $outfile
+sed -i -e 's/HEIGHT/'$yMax'/g' $outfile
+
+rm temp

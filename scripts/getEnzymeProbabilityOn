@@ -1,0 +1,7 @@
+nucNum = $1
+
+grep -v '>' outfile.txt | cut -d ';' -f 20 | sed s/\{[^:]*}://g | uniq | grep -v "\-1" | awk -v nucNum=20 'NR==2{print nucNum; coopA=0; coopM=0; randA=0; randM=0; tot=0; next;} NR%2!=0{next}; $1==30{randM=randM+1; next}; $1==28{randA=randA+1; next}; $1<=12{coopA=coopA+1; next}; {coopM=coopM+1; print $0; next}; END{printf "%.0f %.0f %.0f %.0f\n", randA, randM, coopA, coopM; exit err}'
+
+#empty nucleosome with and without bound enzyme:
+# {}:*.[^;]
+

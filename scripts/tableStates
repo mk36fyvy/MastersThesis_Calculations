@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# Should depict if nucleosome is activated, bivalent, or silenced
+#
+
+# Input: outfile.txt from one EpiDynast run. Output: Table with counts of activated, silenced, bivalent and unmodified nucleosome counts by Gillespie reaction step
+#
+# Supported modifications are:
+# 			sub1="H3[K27.me]"
+#			sub2="H3[K27.ac]"
+#			sub3="H3[K4.me]"
+#			sub4="H2[A.ub]"
+
+# echo -e "Step \t active \t silent \t bivalent \t unmodified \t Total" > $outfile
+
+# echo "Processing dir $1 of noise factor $2"
+echo "Processing dir $1"
+
+outfile="state_counts.csv"
+
+# extracting only the nucleosome string lines, discarding the headers
+fgrep '{' outfile.txt > tableStates.temp
+
+tempLineCount=$(wc -l < tableStates.temp)
+
+if [ -f $outfile ]; then
+	outfileLineCount=$(wc -l < $outfile)
+	if [ "$tempLineCount" -ne "$outfileLineCount" ]; then
+		rm $outfile
+		echo "Deleted already existing file $outfile because its line count ($outfileLineCount) does not equal to number of run steps ($tempLineCount)."
+		touch $outfile
+		echo "Creating nucleosome states count table..."
+	else
+		echo "Reusing already existing $outfile. If you do not wish this behaviour please delete $outfile manually."
+		exit 0
+	fi
+fi
+
+#defining which mod-combo belongs to which state
+activated=("{H3[K4.me]}" "{H3[K27.ac]}" "{H3[K27.ac]H3[K4.me]}")
+silenced=("{H2[A.ub]}" "{H3[K27.me]}" "{H3[K27.me]H2[A.ub]}")
+bivalent=("{H2[A.ub]H3[K4.me]}" "{H3[K27.me]H3[K4.me]}" "{H3[K27.ac]H2[A.ub]}" "{H3[K27.me]H2[A.ub]H3[K4.me]}" "{H3[K27.ac]H2[A.ub]H3[K4.me]}")
+
+# extracting only the nucleosome string lines, discarding the headers
+# fgrep '{' outfile.txt > tableStates.temp
+
+stepIndex=1
+
+
+# reads temp line by line
+while read -r line; do
+
+	# removes everything from line except what's in between {}, i.e nucleosome with modifications
+	array=$(echo $line | tr ';' '\n' | grep -oE {.*})
+
+	# nucleosome state counts
+	unmodifiedNuc=0
+	activatedNuc=0
+	silencedNuc=0
+	bivalentNuc=0
+
+	for element in $array; do
+		[[ $element == "{}" ]] 	&& { let "unmodifiedNuc++" ; continue; } # 1 && { 2 ; 3; } if 1 is successful, do 2 then 3, if not, do neither 2 nor 3
+		[[ ${activated[*]} =~ (^|[[:space:]])"${element}"($|[[:space:]]) ]] && { let "activatedNuc++" ; continue; } # Check if element (aka nucleosome) is in array, f.ex. activated (=~, the binary operator, checks if a Regex matches an element in the array. The two spaces are needed in order to only search for exact match)
+		[[ ${silenced[*]} =~ (^|[[:space:]])"${element}"($|[[:space:]]) ]] 	&& { let "silencedNuc++" ; continue; }
+		[[ ${bivalent[*]} =~ (^|[[:space:]])"${element}"($|[[:space:]]) ]] 	&& { let "bivalentNuc++" ; continue; }
+		echo "Error! $element was not found"
+		exit 64
+	done
+
+	total=$((unmodifiedNuc + activatedNuc + silencedNuc + bivalentNuc))
+
+	echo -e "$stepIndex \t $activatedNuc \t $silencedNuc \t $bivalentNuc \t $total" >> $outfile
+
+	let "stepIndex++"
+
+done < tableStates.temp
+
+rm tableStates.temp

@@ -1,0 +1,29 @@
+# THIS SCRIPT IS CALLED BY 'getEnzymeBindingDurations'
+# Else, CALL THIS IN RESULTS/#/, WHERE OUTFILE.TXT IS PRESENT
+
+
+nucNum=$1
+
+echo $nucNum
+# Write enzyme binding history of nucleosome nucNum to file j
+# grep -v '>' outfile.txt | cut -d ';' -f $nucNum | sed s/\{[^:]*}://g  | uniq -c | awk 'NR==1{p=$1; next}; {print $1-p, q; p=$1; q=$2};' | tail -n +2 | grep -v "\-1" | sort -nt " " -k2 | awk -v nucNum=$nucNum 'NR==1{p=$1; q=$2; print nucNum; next}; q==$2{p=p+$1; next}; {printf "%.0f %.11f\n", q, p; p=$1; q=$2}; END{printf "%.0f %.11f\n", q, p}'
+grep -v '>' outfile.txt | cut -d ';' -f $nucNum | sed s/\{[^:]*}://g  | tail -n +2 | uniq | grep -v "\-1" | sort -n | uniq -c  | sed 's/^\s*//'
+
+# paste: Connect files i and j line by line with SPACE as a delimiter
+# paste -d " " bindingTimestamps.temp enzymeBindingHistory.temp > bindingEventsWithTimestamps.temp && rm bindingTimestamps.temp enzymeBindingHistory.temp
+
+# uniq -s: compare and merge the lines according to similarity while ignoring the first 11 charcters (i.e. the timestamp)
+# awk: take the timestamp next to the enzyme (i.e. the time, when the enzyme bound to the site), then subtract the time
+#      in line after this line from it in order to get the total binding time for every (un)binding event
+# uniq -s 11 bindingEventsWithTimestamps.temp | awk 'NR==1{p=$1; next}; {print $1-p, q; p=$1; q=$2};' | tail -n +2 > bindingEventsDuration.temp && rm bindingEventsWithTimestamps.temp
+
+# Counts the total binding time, regardless how often the enzyme bound
+# throw away -1, then sort so that equal enzymes are beneath each other,
+# awk: Assigning p and q in first line, then if $2 is the same number (i.e. enzyme) as above (i.e. q), add the binding durations and continue
+#      If they are not the same, print the added durations and the enzyme number and reassign p, as well as q
+# grep -v "\-1" p | sort -nt " " -k2 | awk 'NR==1{p=$1; q=$2; next}; q==$2{p=p+$1; next}; {print p, q; p=$1; q=$2}; END{print p, q}'
+
+# Calculates the average binding time per enzyme for a specific amino acid position
+# awk: p and q: see above. o counts the number of association events by which, the overall binding time is divided afterwards
+# grep -v "\-1" bindingEventsDuration.temp | sort -nt " " -k2 | awk -v nucNum=$nucNum 'NR==1{o=1; p=$1; q=$2; print nucNum; next}; q==$2{o=o+1; p=p+$1; next}; {printf "%.0f %.11f\n", q, p/o; o=1; p=$1; q=$2}; END{printf "%.0f %.11f\n", q, p/o}' && rm bindingEventsDuration.temp
+

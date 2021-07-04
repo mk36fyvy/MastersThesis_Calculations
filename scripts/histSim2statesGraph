@@ -1,0 +1,31 @@
+# **MAIN SCRIPT TO CALL, MANAGES ALL OTHER SCRIPTS**
+
+# CHANGES HAVE TO BE MADE BELOW ACCORDING TO USE CASE
+
+# noise_factor=$1
+
+
+cd results && mkdir -p "../analysis"
+
+for d in */; do
+    cd $d
+    echo "Processing dir $(basename $d)"
+    mkdir -p "../../analysis/$(basename $d)"
+    # tableStates $(basename $d) $noise_factor # I: outfile.txt from EpiDynaST; O: Tabled occurences of nucl states (active, silent, bivalent)
+    # plotTables $(basename $d) $noise_factor # I: table from tableStates; O: Plots with 1. state occurence during simulation 2. stacked bar plot of all the states per Gillespie step
+    # tableStates_all27 $(basename $d)  # I: outfile.txt from EpiDynaST; O: Tabled occurences of nucl states (active, silent, bivalent)
+
+    # Choose script depending on modifications that occur in the system
+        # histSim2csvCounts_K27_K4 $(basename $d) # Occurring modifications: K27.ac, K4.me
+        # histSim2csvCounts_K27only $(basename $d)       # Occurring modifications: K27.ac, K27.me
+        # histSim2csvCounts_Ky_Kx $(basename $d) # Occuring modifications: Ky.me, Ky.ac, Kx.me, Kx.ac (also on same nuc)
+        short_histSim2csvCounts_K27only $(basename $d)       # Occurring modifications: K27.ac, K27.me, short output is taken because not all steps are plotted
+
+
+        # argument basename etc. might not be needed anymore
+
+    plotTables_long $(basename $d)  # I: table from tableStates; O: Plots with 1. state occurence during simulation 2. stacked bar plot of all the states per Gillespie step
+    cd ..
+done
+
+cd ..

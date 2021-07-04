@@ -1,0 +1,13 @@
+countedElement=3
+
+if [ "$1" == "E" ]; then
+    countedElement=4
+    # echo "Displaying, how often reaction channels have been chosen by Gillespie's"
+# else
+    # echo "Displaying how often the indicated nucleosomes have been modified"
+fi
+
+grep '>' './outfile.txt' | cut -d ' ' -f $countedElement | sort -g | uniq -c | sed -e s/^' '*//g #-e s/' '/,/g
+
+# command to get the enzymes in a table per amino acid, then some counting is done on the first amino acid
+# grep -v '>' outfile.txt | sed -e s/\{[^:]*}//g -e s/\;//g -e s/:/,/g | cut -d , -f 2 | uniq -c

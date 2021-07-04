@@ -1,0 +1,6 @@
+# seed: 1698129323 
+#  1: H3[K27.un]
+#  2: H3[K27.ac]
+#  3: H3[K27.me]
+
+# sequence,	H3[K27.un],	 H3[K27.ac],	 H3[K27.me],	 run,	iteration,	time 
